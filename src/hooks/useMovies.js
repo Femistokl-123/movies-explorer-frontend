@@ -2,9 +2,10 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import {SHORT_DURATION} from "../utils/constants";
 
 export const useMovies = (fetchFilms) => {
+    const initMovies = localStorage.getItem("allmovies") ? JSON.parse(localStorage.getItem("allmovies")) : [];
     const [state, setState] = useState({
         isLoading: false,
-        films: [],
+        films: initMovies,
         error: null,
     });
     const localStorageSearch = localStorage.getItem("searchInput") || "";
@@ -30,7 +31,7 @@ export const useMovies = (fetchFilms) => {
 
                     films = await fetchFilms();
 
-
+                    localStorage.setItem("allmovies", JSON.stringify(films));
                     setState((state) => ({
                         ...state,
                         films,
@@ -47,7 +48,10 @@ export const useMovies = (fetchFilms) => {
                     }));
                 }
             };
-            handleFetchFilms();
+
+            if (!films.length) {
+                handleFetchFilms();
+            }
             return ([]);
         }
 

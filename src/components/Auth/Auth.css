@@ -68,6 +68,12 @@
   cursor: pointer;
 }
 
+.auth__submit-register:disabled {
+  opacity: 0.8;
+  cursor: default;
+}
+
+
 .auth__submit-login {
   align-self: end;
   width: 100%;
@@ -81,6 +87,11 @@
   color: white;
   margin-top: 157px;
   cursor: pointer;
+}
+
+.auth__submit-login:disabled {
+  opacity: 0.8;
+  cursor: default;
 }
 
 .auth__submit:hover {

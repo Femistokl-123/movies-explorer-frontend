@@ -13,7 +13,6 @@ function Profile({  handleUpdateUser, handleSignout }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const isNotChanged = (currentUser.name === enteredValues.name && currentUser.email === enteredValues.email);
         if (isNotChanged ) {
             setIsEditing(false);
             return;
@@ -27,9 +26,12 @@ function Profile({  handleUpdateUser, handleSignout }) {
     };
 
     useEffect(() => {
-        currentUser ? resetForm(currentUser) : resetForm();
+        currentUser ? resetForm(currentUser, {}, true) : resetForm();
     }, [currentUser, resetForm]);
 
+    const isNotChanged = (currentUser.name === enteredValues.name && currentUser.email === enteredValues.email);
+
+    console.log(!isFormValid || isNotChanged)
   return (
     <section className="profile">
       <h1 className="profile__title text-medium">Привет, {user.name}!</h1>
@@ -67,7 +69,7 @@ function Profile({  handleUpdateUser, handleSignout }) {
           </div>}
 
         {isEditing ? (
-            <button type="button" className="profile__edit link text" onClick={handleSubmit} disabled={!isFormValid}>
+            <button type="button" className="profile__edit link text" onClick={handleSubmit} disabled={!isFormValid || isNotChanged}>
                 Сохранить
             </button>
         ) : (

@@ -86,6 +86,14 @@
   border: none;
 }
 
+.profile__edit:disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+
+
+
 
 .profile__submit:hover {
   /*text-shadow: rgb(0, 255, 149) 1px 0 10px;*/

@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import Input from "./Input";
 import useForm from "../../hooks/useForm";
+import {useEffect} from "react";
 
 function Login({ onLogin, isAuth }) {
   const { enteredValues, handleChange, isFormValid, resetForm, errors } = useForm();
@@ -19,6 +20,7 @@ function Login({ onLogin, isAuth }) {
     onLogin(enteredValues);
   };
 
+
   return (
     <section className="auth">
       <Link to="/">
@@ -34,18 +36,20 @@ function Login({ onLogin, isAuth }) {
             onChange={handleChange}
             error={errors.email || ""}
             placeholder="Ваш email"
-            value
+            value={enteredValues.email}
+            required
           />
           <Input
             type="password"
             name="password"
             title="Пароль"
+            value={enteredValues.password}
             onChange={handleChange}
             error={errors.password || ""}
             placeholder="Введите пароль"
             minLength={6}
             maxLenght={30}
-            value
+            required
           />
         </div>
         <button type="submit" className="auth__submit-login link" disabled={!isFormValid}>Войти</button>
