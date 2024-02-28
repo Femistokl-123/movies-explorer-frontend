@@ -187,6 +187,7 @@
 
   .burger__movies {
     position: fixed;
+    z-index: 10;
     padding: 30px 27.4px 30px 30px;
     margin: 0;
     content: "";
@@ -198,7 +199,6 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    z-index: 1;
     gap: 28px;
     list-style: none;
     align-items: center;

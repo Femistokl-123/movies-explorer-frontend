@@ -1,21 +1,25 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import Input from "./Input";
+import useForm from "../../hooks/useForm";
+import {useEffect} from "react";
 
-function Login({ onLogin, success }) {
-  const [error, setError] = useState({ email: "", password: "" });
-  const [formData, setFormData] = useState({ email: "", password: "" });
+function Login({ onLogin, isAuth }) {
+  const { enteredValues, handleChange, isFormValid, resetForm, errors } = useForm();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError({ ...error, [e.target.name]: e.target.validationMessage });
-  };
+  const navigate = useNavigate();
+
+
+  if (isAuth) {
+    navigate(-1)
+    return null;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(formData);
+    onLogin(enteredValues);
   };
+
 
   return (
     <section className="auth">
@@ -30,23 +34,25 @@ function Login({ onLogin, success }) {
             name="email"
             title="E-mail"
             onChange={handleChange}
-            error={error.email}
+            error={errors.email || ""}
             placeholder="Ваш email"
-            value
+            value={enteredValues.email}
+            required
           />
           <Input
             type="password"
             name="password"
             title="Пароль"
+            value={enteredValues.password}
             onChange={handleChange}
-            error={error.password}
+            error={errors.password || ""}
             placeholder="Введите пароль"
             minLength={6}
             maxLenght={30}
-            value
+            required
           />
         </div>
-        <button type="submit" className="auth__submit-login link">Войти</button>
+        <button type="submit" className="auth__submit-login link" disabled={!isFormValid}>Войти</button>
         <div className="auth__link-container">
           <p className="color-text">Ещё не зарегистрированы?</p>
           <Link to="/signup" className="auth__link">
